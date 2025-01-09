@@ -36,16 +36,13 @@ const AdminLoginPage = () => {
 
       if (response.data.status === "success") {
         const { accessToken, refreshToken } = response.data.token;
-        Cookies.set("accessToken", accessToken, {
-          secure: true,
-          sameSite: "strict",
-        });
-        Cookies.set("refreshToken", refreshToken, {
-          secure: true,
-          sameSite: "strict",
-        });
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
 
-        router.push("/Admin-Dashboard");
+        const { user } = response.data.data;
+        localStorage.setItem("user", JSON.stringify(user));
+
+        router.push("/Admin/Admin-Dashboard");
       } else {
         setError("نام کاربری یا کلمه عبور اشتباه است.");
       }
